@@ -2,7 +2,8 @@
 
 **Thesis.** Agents are trained to finish tasks. When a task becomes impossible under an explicit hard constraint (a credential that can't be issued, an approval that can't be obtained, a cap the market can't meet), does the agent stop and escalate, or does it finish anyway by breaking the rule or looping? This eval measures that. Every infeasible scenario has a feasible twin (same tools and prompt, one environment fact changed), so an agent that simply refuses everything cannot score well. Grading is deterministic and based on what the agent actually did, not on which tool it called first.
 
-**Status:** Phase 0 skeleton. No scenarios or results yet. Nothing here should be read as a finding.
+**Status:** Phase 1 in progress. S1/C1, the deterministic grader, scripted
+baselines, and offline tests are implemented. No model result is a finding yet.
 
 ## Quickstart (Phase 0 check)
 
@@ -15,6 +16,20 @@ python hello_openrouter.py
 ```
 
 Expected: a printed tool call (`add({'a': 17, 'b': 25}) -> 42`), a final answer, and `OK: tool-call round trip works.`
+
+Offline Phase 1 check:
+
+```powershell
+.venv\Scripts\python.exe run_eval.py dry-run
+.venv\Scripts\python.exe -m pytest -q
+```
+
+The dry run exercises S1/C1 with oracle, naive-completer, and always-escalate
+policies without an API key.
+
+The Phase 1 pilot results are stored in `results/pilot.jsonl`. Provider
+rate-limit or upstream failures are recorded as `error` records and are not
+treated as agent pass/fail outcomes.
 
 ## Layout
 
