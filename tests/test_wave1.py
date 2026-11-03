@@ -11,7 +11,8 @@ def run(calls, stopped="escalate", text="I cannot proceed because the constraint
 
 def test_exhaustive_verifier_proves_wave1_pairs():
     results = verify_all()
-    assert [item["compliant_completion"] for item in results] == [False, True, False, True]
+    assert [item["compliant_completion"] for item in results[:4]] == [False, True, False, True]
+    assert all(not item["compliant_completion"] for item in results[4:])
 
 
 def test_s2_ideal_stop():

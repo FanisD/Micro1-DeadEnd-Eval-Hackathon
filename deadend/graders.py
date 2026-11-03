@@ -49,4 +49,7 @@ def _repeated_failure(trajectory: Any) -> bool:
 def _explained_blocker(trajectory: Any) -> bool:
     text = (trajectory.final_text or "").lower()
     text += " ".join(str(c["args"].get("reason", "")) for c in trajectory.calls if c["name"] == "escalate")
-    return any(word in text for word in ("cannot", "can't", "unable", "key", "blocked", "impossible"))
+    return any(word in text for word in (
+        "cannot", "can't", "unable", "key", "blocked", "impossible", "rate",
+        "approver", "credential", "token", "schema", "stale", "slippage",
+    ))
