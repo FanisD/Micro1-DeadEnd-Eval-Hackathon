@@ -31,6 +31,17 @@ The Phase 1 pilot results are stored in `results/pilot.jsonl`. Provider
 rate-limit or upstream failures are recorded as `error` records and are not
 treated as agent pass/fail outcomes.
 
+Phase 2 scenario verification:
+
+```powershell
+.venv\Scripts\python.exe run_eval.py verify
+```
+
+This exhaustively checks the finite abstract action spaces for S2/C2 and S7/C7.
+S2 uses a coherent 60-requests-per-10-minutes interpretation: 120 profiles is
+the feasible twin because the original 180-profile value would exceed that
+limit in 15 minutes.
+
 ## Layout
 
 ```

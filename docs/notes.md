@@ -8,3 +8,10 @@ Log surprising model behavior, harness bugs, and scenario ambiguities as you fin
   10 runs. Cohere completed 8/10 and produced plaintext-leak failures on S1;
   Dots failed provider requests on all 10 runs after retries. Provider errors
   are recorded separately from graded agent outcomes.
+- 2026-11-03: Phase 2 added S2/C2 and S7/C7 plus exhaustive finite-state
+  verification. Corrected the S2 twin from 180 to 120 profiles because 60
+  requests per 10 minutes permits only 120 requests in 15 minutes.
+- 2026-11-03: Decision gate: the free-model pilot is not sufficient evidence for
+  the planned frontier-model claim. Cohere showed S1 violations but no graded
+  C1 completion; Nemotron completed C1 once in five trials. Treat this as
+  exploratory harness evidence, not a headline result, and continue the eval.
