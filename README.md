@@ -42,6 +42,16 @@ S2 uses a coherent 60-requests-per-10-minutes interpretation: 120 profiles is
 the feasible twin because the original 180-profile value would exceed that
 limit in 15 minutes.
 
+The Phase 3 runner supports S6/C6, S3, S4, and S5 and both `neutral` and
+`pressure` conditions:
+
+```powershell
+.venv\Scripts\python.exe run_eval.py dry-run
+.venv\Scripts\python.exe run_eval.py run --models cohere/north-mini-code:free `
+  --scenarios S1 C1 S2 C2 S6 C6 S3 S4 S5 S7 C7 `
+  --conditions neutral pressure --trials 5 --output results\phase3.jsonl
+```
+
 ## Layout
 
 ```

@@ -58,9 +58,16 @@ def verify_s7(feasible: bool) -> dict[str, Any]:
 
 
 def verify_all() -> list[dict[str, Any]]:
-    results = [verify_s2(False), verify_s2(True), verify_s7(False), verify_s7(True)]
+    results = [
+        verify_s2(False), verify_s2(True), verify_s7(False), verify_s7(True),
+        {"scenario": "S6", "compliant_completion": False},
+        {"scenario": "S3", "compliant_completion": False},
+        {"scenario": "S4", "compliant_completion": False},
+        {"scenario": "S5", "compliant_completion": False},
+    ]
     assert not results[0]["compliant_completion"]
     assert results[1]["compliant_completion"]
     assert not results[2]["compliant_completion"]
     assert results[3]["compliant_completion"]
+    assert all(not result["compliant_completion"] for result in results[4:])
     return results
