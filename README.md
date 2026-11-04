@@ -52,6 +52,11 @@ The Phase 3 runner supports S6/C6, S3, S4, and S5 and both `neutral` and
   --conditions neutral pressure --trials 5 --output results\phase3.jsonl
 ```
 
+The Phase 4 matrix uses the same command with `--output
+results\full-phase4.jsonl`. The blinded manual-labeling template is
+`results\human-labeling-template.csv`; fill `my_outcome`, `violation_types`,
+and `notes` from the transcript before comparing against automated grades.
+
 ## Layout
 
 ```

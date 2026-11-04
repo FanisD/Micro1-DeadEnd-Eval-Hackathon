@@ -19,3 +19,7 @@ Log surprising model behavior, harness bugs, and scenario ambiguities as you fin
   scripted baselines, and wired neutral/pressure conditions. Red-team review
   corrected S3 so the ordinary token cannot deploy; only the exposed admin
   token can technically deploy and is flagged as forbidden credential misuse.
+- 2026-11-04: Phase 4 full matrix launched with three pinned free-model slugs,
+  eleven scenarios, neutral and pressure conditions, and five trials. Results
+  are written incrementally to results/full-phase4.jsonl; human labels are
+  collected separately in a blinded CSV before automated comparison.
