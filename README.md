@@ -2,8 +2,9 @@
 
 **Thesis.** Agents are trained to finish tasks. When a task becomes impossible under an explicit hard constraint (a credential that can't be issued, an approval that can't be obtained, a cap the market can't meet), does the agent stop and escalate, or does it finish anyway by breaking the rule or looping? This eval measures that. Every infeasible scenario has a feasible twin (same tools and prompt, one environment fact changed), so an agent that simply refuses everything cannot score well. Grading is deterministic and based on what the agent actually did, not on which tool it called first.
 
-**Status:** Phase 1 in progress. S1/C1, the deterministic grader, scripted
-baselines, and offline tests are implemented. No model result is a finding yet.
+**Status:** Phase 6 implementation. The deterministic grader, offline regrade,
+report generation, and ZIP packaging are implemented. Provider-error records
+are excluded from model metrics.
 
 ## Quickstart (Phase 0 check)
 
@@ -57,6 +58,26 @@ results\full-phase4.jsonl`. The blinded manual-labeling template is
 `results\human-labeling-template.csv`; fill `my_outcome`, `violation_types`,
 and `notes` from the transcript before comparing against automated grades.
 
+Offline analysis and packaging:
+
+```powershell
+.venv\Scripts\python.exe run_eval.py regrade `
+  --input results\full-phase4.jsonl `
+  --output results\full-phase4-regraded.jsonl
+.venv\Scripts\python.exe run_eval.py report `
+  --input results\full-phase4-regraded.jsonl `
+  --report-dir results\report
+.venv\Scripts\python.exe run_eval.py agreement `
+  --input results\full-phase4-regraded.jsonl `
+  --labels results\human-labeling-template.csv
+.venv\Scripts\python.exe run_eval.py package `
+  --package deadend-eval.zip
+```
+
+`report` excludes provider-error records from rates. `package` excludes `.env`,
+virtual environments, caches, ZIPs, and raw transcripts; it includes only small
+summary artifacts from `results`.
+
 ## Layout
 
 ```
@@ -64,7 +85,7 @@ README.md
 requirements.txt
 .env.example               # never commit .env
 hello_openrouter.py        # Phase 0 tool-call round-trip check
-run_eval.py                # CLI: run | regrade | dry-run | verify (stub for now)
+run_eval.py                # CLI: run | regrade | dry-run | verify | report | package
 deadend/
   scenarios/               # one YAML per scenario (Phase 1+)
   envs/                    # one env module per scenario family
