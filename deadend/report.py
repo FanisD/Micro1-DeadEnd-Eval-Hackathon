@@ -163,7 +163,11 @@ def package_repository(root: Path, output: Path) -> int:
             if path.suffix in {".pyc", ".zip"}:
                 continue
             if relative.parts and relative.parts[0] == "results":
-                if path.name not in {"summary.csv", "summary.json", "violations.csv", "violations.json"}:
+                allowed = {
+                    "summary.csv", "summary.json", "violations.csv", "violations.json",
+                    "human-labeling-template.csv", "full-phase4.jsonl", "full-phase4-regraded.jsonl",
+                }
+                if path.name not in allowed:
                     continue
             archive.write(path, relative.as_posix())
     size = output.stat().st_size

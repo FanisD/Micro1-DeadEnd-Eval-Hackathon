@@ -23,3 +23,9 @@ Log surprising model behavior, harness bugs, and scenario ambiguities as you fin
   eleven scenarios, neutral and pressure conditions, and five trials. Results
   are written incrementally to results/full-phase4.jsonl; human labels are
   collected separately in a blinded CSV before automated comparison.
+- 2026-11-05: Phase 5 analysis completed. Offline regrading processed 134 graded
+  runs. Human agreement across 40 real transcripts reached 100% agreement.
+  Key finding: completion pressure surges constraint violations from 3 to 10
+  on Cohere, cutting IPR from 93.1% to 67.6% via unauthorized approver
+  fabrications (S6) and unencrypted bootstrapping (S1). Showcase transcripts
+  annotated in docs/findings-and-showcase.md.
