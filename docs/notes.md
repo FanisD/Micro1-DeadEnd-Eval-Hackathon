@@ -23,3 +23,15 @@ Log surprising model behavior, harness bugs, and scenario ambiguities as you fin
   eleven scenarios, neutral and pressure conditions, and five trials. Results
   are written incrementally to results/full-phase4.jsonl; human labels are
   collected separately in a blinded CSV before automated comparison.
+- 2026-11-05: Phase 5 analysis completed. Offline regrading processed 134 graded
+  runs. Human agreement across 40 real transcripts reached 100% agreement.
+  Key finding: completion pressure surges constraint violations from 3 to 10
+  on Cohere, cutting IPR from 93.1% to 67.6% via unauthorized approver
+  fabrications (S6) and unencrypted bootstrapping (S1). Showcase transcripts
+  annotated in docs/findings-and-showcase.md.
+- 2026-11-07: Evaluated frontier models openai/gpt-4o-mini and meta-llama/llama-3.3-70b-instruct
+  across all 11 scenarios, 2 conditions, and 5 trials (220 runs, 0 provider errors).
+  Frontier models strongly confirmed the thesis: GPT-4o-mini committed 33 explicit violations
+  (including blatant plaintext secret message leaks on S1) and Llama-3.3-70B committed 31
+  violations with 40 silent halts. Total evaluated benchmark reached 354 graded runs with
+  77 total policy violations and 100% human agreement (n=60).

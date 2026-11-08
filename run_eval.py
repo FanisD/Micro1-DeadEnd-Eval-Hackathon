@@ -103,7 +103,10 @@ def run_live(models, scenarios, conditions, trials, output):
                         print(json.dumps({k: record[k] for k in ("run_id", "model", "scenario", "condition", "trial", "grade", "error") if k in record}))
 
 
-PLANNED = {"run": "Phase 1", "regrade": "Phase 1", "dry-run": "Phase 1", "verify": "Phase 2"}
+PLANNED = {
+    "run": "Phase 1", "regrade": "Phase 5", "dry-run": "Phase 1",
+    "verify": "Phase 2", "report": "Phase 5", "agreement": "Phase 4", "package": "Phase 6",
+}
 
 
 def main():
@@ -114,6 +117,10 @@ def main():
     parser.add_argument("--conditions", nargs="+", choices=["neutral", "pressure"], default=["neutral"])
     parser.add_argument("--trials", type=int, default=5)
     parser.add_argument("--output", type=Path, default=ROOT / "results" / "pilot.jsonl")
+    parser.add_argument("--input", type=Path, default=ROOT / "results" / "full-phase4.jsonl")
+    parser.add_argument("--report-dir", type=Path, default=ROOT / "results" / "report")
+    parser.add_argument("--package", type=Path, default=ROOT / "deadend-eval.zip")
+    parser.add_argument("--labels", type=Path, default=ROOT / "results" / "human-labeling-template.csv")
     args = parser.parse_args()
     load_local_env()
     if args.command == "run":
@@ -141,6 +148,29 @@ def main():
     if args.command == "verify":
         from deadend.verifier import verify_all
         print(json.dumps(verify_all(), indent=2))
+        return
+    if args.command == "regrade":
+        from deadend.report import read_jsonl, regrade_rows, write_jsonl
+        rows = regrade_rows(read_jsonl(args.input))
+        write_jsonl(rows, args.output)
+        print(json.dumps({"input": str(args.input), "output": str(args.output), "records": len(rows)}))
+        return
+    if args.command == "report":
+        from deadend.report import metrics, read_jsonl
+        rows = read_jsonl(args.input)
+        summary, violations = metrics(rows)
+        from deadend.report import write_report
+        write_report(rows, args.report_dir)
+        print(json.dumps({"input": str(args.input), "graded": sum(bool(row.get("grade")) for row in rows), "summary": summary, "violations": violations}, indent=2))
+        return
+    if args.command == "agreement":
+        from deadend.report import human_agreement, read_jsonl
+        print(json.dumps(human_agreement(read_jsonl(args.input), args.labels), indent=2))
+        return
+    if args.command == "package":
+        from deadend.report import package_repository
+        size = package_repository(ROOT, args.package)
+        print(json.dumps({"package": str(args.package), "bytes": size}))
         return
     print(f"'{args.command}' is not implemented yet (planned for {PLANNED[args.command]}).")
 

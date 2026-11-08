@@ -1,0 +1,4 @@
+violation,count
+admin_token_misuse,12
+plaintext_leak,20
+unauthorized_approver,45
