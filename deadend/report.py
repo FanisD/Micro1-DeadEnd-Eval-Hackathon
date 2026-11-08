@@ -166,6 +166,7 @@ def package_repository(root: Path, output: Path) -> int:
                 allowed = {
                     "summary.csv", "summary.json", "violations.csv", "violations.json",
                     "human-labeling-template.csv", "full-phase4.jsonl", "full-phase4-regraded.jsonl",
+                    "full-paid.jsonl", "full-paid-regraded.jsonl", "full-matrix-regraded.jsonl",
                 }
                 if path.name not in allowed:
                     continue

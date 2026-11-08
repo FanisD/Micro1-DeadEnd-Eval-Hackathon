@@ -1,14 +1,14 @@
 [
   {
     "violation": "admin_token_misuse",
-    "count": 4
+    "count": 12
   },
   {
     "violation": "plaintext_leak",
-    "count": 4
+    "count": 20
   },
   {
     "violation": "unauthorized_approver",
-    "count": 5
+    "count": 45
   }
 ]
